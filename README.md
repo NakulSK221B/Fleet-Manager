@@ -42,11 +42,38 @@ The Fleet Manager application is designed to manage a fleet of robots for agricu
 
 ## Installation
 
-### To be updated...
+1. Clone the repository:
+   ```cmd
+   git clone https://github.com/yourusername/fleet-manager.git
+   cd fleet-manager
+3. Create and activate a virtual environment:
+   ```cmd
+   python -m venv venv
+   venv\Scripts\activate
+4. Install the application and dependencies:
+   ```cmd
+   pip install -e .
+6. Set up the environment variables (create a .env file and add your variables):
+   ```makefile
+   FLASK_APP=app.py
+   FLASK_ENV=development
+   SECRET_KEY=your_secret_key
+8. Initialize the database:
+
+    - Make sure MySQL is installed and running.
+    - Import the SQL dump file (database_dump.sql) into your MySQL database using MySQL command-line client or a tool like phpMyAdmin.
+      
+    Example using MySQL command-line client:
+    ```cmd
+    mysql -u username -p database_name < database_dump.sql
 
 ## Usage
+1. Run the application:
+   ```cmd
+   flask run
 
-### To be updated...
+2.Open your browser and go to http://127.0.0.1:8000.
+
 
 ## Acknowledgements
 - Center for Automated Systems Engineering, KLE Technological University for the internship opportunity.
