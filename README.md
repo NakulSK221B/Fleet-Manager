@@ -44,8 +44,8 @@ The Fleet Manager application is designed to manage a fleet of robots for agricu
 
 1. Clone the repository:
    ```cmd
-   git clone https://github.com/yourusername/fleet-manager.git
-   cd fleet-manager
+   git clone https://github.com/NakulSK221B/Fleet-Manager.git
+   cd Fleet-Manager
 3. Create and activate a virtual environment:
    ```cmd
    python -m venv venv
