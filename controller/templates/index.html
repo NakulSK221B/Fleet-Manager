@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Fleet Manager</title>
+    <!--===============================================================================================-->	
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/system-log.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/task-ssign.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/leaflet.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/leaflet.awesome-markers.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/leaflet.awesome.rotate.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/all.min.css') }}">
+
+    <script src="{{ url_for('static',filename= 'js/leaflet.js') }}" charset="utf-8"></script>
+    <script src="{{ url_for('static',filename= 'js/jquery-1.12.4.min.js') }}" charset="utf-8"></script>
+    <script src="{{ url_for('static',filename= 'js/leaflet.awesome-markers.js') }}" charset="utf-8"></script>
+</head>
+<body>
+    <main>
+        <aside class="side-bar">
+            <ul id="nav-links">
+                <li><strong>Fleet Manager</strong></li>
+                <input type="radio" id="tab1" name="tabs" class="tab-radio" />
+                <label class="tab-label" for="tab1">Home</label>
+                <input type="radio" id="tab2" name="tabs" class="tab-radio" checked/>
+                <label class="tab-label" for="tab2">Dashboard</label>
+                <!-- <input type="radio" id="tab4" name="tabs" class="tab-radio"/>
+                <label class="tab-label" for="tab4">Task assignment</label> -->
+                <!-- <input type="radio" id="tab3" name="tabs" class="tab-radio"/>
+                <label class="tab-label" for="tab3">Robot Status</label> -->
+                <input type="radio" id="tab4" name="tabs" class="tab-radio"/>
+                <label class="tab-label" for="tab4">System Logs</label>
+            </ul>
+            <ul id="nav-links">
+                <input type="radio" id="logout-tab" name="tabs" class="logout-radio"/>
+                    <label class="tab-label" for="logout-tab">
+                        <form id="logoutForm" method="post" action="{{ url_for('logout') }}">
+                            <input type="hidden" name="tabs" value="POST">
+                            <button type="submit" class="logout-button">LogOut</button>
+                        </form>
+                    </label>
+            </ul>
+        </aside>
+        <div class="main-content">
+            <section id="homepage-content" class="tab-content">
+                <section id="welcome-section" class="sub-section">
+                    <h2>Welcome to the Fleet Management System for Mobile Robots!</h2>
+                    <p>Content for the homepage goes here...</p>
+                </section>
+                <section id="aboutus-section" class="sub-section">
+                    <h3>About us</h3>
+                    <p>This is a web application designed to manage the fleet of mobile robots. It provides information about each robot's status and allows task assignment.</p>
+                </section>
+            </section>
+            <section id="dashboard-page-content" class="tab-content">
+                <div id="dashboard-page-content">
+                    <div class="dashboard-content">
+                        <h1>Dashboard</h1>
+                        <div class="dashboard">
+                            <div class="mapbox">
+                                <div class="folium-map" id="map" ></div>
+                                <script src="{{ url_for('static',filename= 'js/leaflet_map.js') }}" charset="utf-8"></script>
+                            </div> 
+                            <div class="row1-long-wide">
+                                <div class="assigntask">
+                                    <!-- <h2>Task  Assignment</h2> -->
+                                    <form id="robotForm" class="assign-form" method="post" action="">
+                                        <div class="form-row">
+                                            <label for="landmarkSelect" class="landmark-label">Select Landmark:</label>
+                                            <select id="landmarkSelect" class="landmark-select" name="landmark-select"></select>
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="robotSelect" class="robots-label">Select Robot:</label>
+                                            <select id="robotSelect" class="robots-select" name="robots-select"></select>
+                                        </div>
+                                        <div class="form-row">
+                                            <label for="instructions" class="instruction-label">Task Description:</label>
+                                            <select id="taskSelect" class="task-select" name="task-select">
+                                                <option value="Not Specified">*Select Task*</option>
+                                                <option value="Delivery"> Delivery</option>
+                                                <option value="Harvesting"> Harvesting</option>
+                                                <option value="Charging"> Charging</option>
+                                            </select>
+                                        </div>
+                                        <!-- Submit Button -->
+                                        <div class="button-row">
+                                            <input type="submit" id="submitBtn" class="submit-button" value="Submit"></input>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="current_task">
+                                    <table id="current-task-table" class="current-task-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Robot ID</th>
+                                                <th>Assigned By</th>
+                                                <!-- <th>Electronics Battery</th>
+                                                <th>Motor Battery</th>
+                                                <th>Current Latitude</th>
+                                                <th>Current Longitude</th> -->
+                                                <th>Destination</th>
+                                                <th>Task Description</th>
+                                                <!-- <th>Time Stamp</th> -->
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Rows for all robots -->
+                                            <tr id="Robot1">
+                                                <td>Robot1</td>
+                                                <td><span id="Robot1_employeeid"></span></td>
+                                                <!-- <td><span id="Robot1_charge_electronics_battery"></span></td>
+                                                <td><span id="Robot1_charge_motor_battery"></span></td>
+                                                <td><span id="Robot1_current_latitude"></span></td>
+                                                <td><span id="Robot1_current_longitude"></span></td> -->
+                                                <td><span id="Robot1_destination"></span></td>
+                                                <td><span id="Robot1_additional_description"></span></td>
+                                                <!-- <td><span id="Robot1_time_stamp"></span></td> -->
+                                            </tr>
+                                            <tr id="Robot2">
+                                                <td>Robot2</td>
+                                                <td><span id="Robot2_employeeid"></span></td>
+                                                <!-- <td><span id="Robot2_charge_electronics_battery"></span></td>
+                                                <td><span id="Robot2_charge_motor_battery"></span></td>
+                                                <td><span id="Robot2_current_latitude"></span></td>
+                                                <td><span id="Robot2_current_longitude"></span></td> -->
+                                                <td><span id="Robot2_destination"></span></td>
+                                                <td><span id="Robot2_additional_description"></span></td>
+                                                <!-- <td><span id="Robot2_time_stamp"></span></td> -->
+                                            </tr>
+                                            <tr id="Robot3">
+                                                <td>Robot3</td>
+                                                <td><span id="Robot3_employeeid"></span></td>
+                                                <!-- <td><span id="Robot3_charge_electronics_battery"></span></td>
+                                                <td><span id="Robot3_charge_motor_battery"></span></td>
+                                                <td><span id="Robot3_current_latitude"></span></td>
+                                                <td><span id="Robot3_current_longitude"></span></td> -->
+                                                <td><span id="Robot3_destination"></span></td>
+                                                <td><span id="Robot3_additional_description"></span></td>
+                                                <!-- <td><span id="Robot3_time_stamp"></span></td> -->
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row2">
+                                <div class="robotinfo">
+                                    <span class="robotid">Robot1</span>
+                                    <div class="robotcharge">
+                                        <div class="electronicsdiv">
+                                            <span class="batteryid">Electronics Battery:</span>
+                                            <div class="batterylevel">
+                                                <div id="Robot1electronicsbatteryfill" class="batteryfill"></div>
+                                            </div>
+                                            <span id="Robot1electronicsbatterypercentage" class="batterypercentage">--%</span> 
+                                        </div>
+                                        <div class="motordiv">
+                                            <span class="batteryid">Motor Battery:</span>
+                                            <div class="batterylevel">
+                                                <div id="Robot1motorbatteryfill" class="batteryfill"></div>
+                                            </div>
+                                            <span id="Robot1motorbatterypercentage" class="batterypercentage">--%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row2">
+                                <div class="robotinfo">
+                                    <span class="robotid">Robot2</span>
+                                    <div class="robotcharge">
+                                        <div class="electronicsdiv">
+                                            <span class="batteryid">Electronics Battery:</span>
+                                            <div class="batterylevel">
+                                                <div id="Robot2electronicsbatteryfill" class="batteryfill"></div>
+                                            </div>
+                                            <span id="Robot2electronicsbatterypercentage" class="batterypercentage">--%</span> 
+                                        </div>
+                                        <div class="motordiv">
+                                            <span class="batteryid">Motor Battery:</span>
+                                            <div class="batterylevel">
+                                                <div id="Robot2motorbatteryfill" class="batteryfill"></div>
+                                            </div>
+                                            <span id="Robot2motorbatterypercentage" class="batterypercentage">--%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row2"><div class="robotinfo">
+                                <span class="robotid">Robot3</span>
+                                <div class="robotcharge">
+                                    <div class="electronicsdiv">
+                                        <span class="batteryid">Electronics Battery:</span>
+                                        <div class="batterylevel">
+                                            <div id="Robot3electronicsbatteryfill" class="batteryfill"></div>
+                                        </div>
+                                        <span id="Robot3electronicsbatterypercentage" class="batterypercentage">--%</span> 
+                                    </div>
+                                    <div class="motordiv">
+                                        <span class="batteryid">Motor Battery:</span>
+                                        <div class="batterylevel">
+                                            <div id="Robot3motorbatteryfill" class="batteryfill"></div>
+                                        </div>
+                                        <span id="Robot3motorbatterypercentage" class="batterypercentage">--%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>  
+            </section>
+
+            <section id="robotstatus-content" class="tab-content">
+                <h1>Status Information</h1>
+            </section>
+
+            <section id="systemlogs-content" class="tab-content">
+                <div class="systemlog-main">
+                    <h1>System Logs</h1>
+                    <div class="systemlog-searchbar">
+                            <select id="systemlog-select1" class="systemlog-select" name="systemlog-select1">
+                                <option value="employee_log">Operator Log</option>
+                                <option value="task_log">Task Log</option>
+                                <option value="robot_log">Robot Movement Log</option>
+                                <option value="motor_battery_consumption_log">Battery Consumption Log (Motor)</option>
+                                <option value="electronics_battery_consumption_log">Battery Consumption Log (Electronics)</option>
+                            </select>
+                            <select id="systemlog-select2" class="systemlog-select" name="systemlog-select2">
+                            </select>
+                            <button type="submit" id="systemlog-btn" class="systemlog-btn">Search</button>                           
+                    </div>
+                    <div class="systemlog-container">
+                        <div class="systemlog-table-wrapper">
+                            <table id="systemlog-table" class="systemlog-table">
+                                <!-- Table content will be added dynamically -->
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+
+        </div>
+    </main>
+    <script src="{{ url_for('static',filename= 'js/navigation.js') }}" charset="utf-8"></script>
+    <script src="{{ url_for('static',filename= 'js/script.js') }}" charset="utf-8"></script>
+    
+</body>
+</html>

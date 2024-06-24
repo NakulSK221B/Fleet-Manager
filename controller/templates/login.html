@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename= 'css/login.css') }}">
+    <title>Login Page</title>
+</head>
+<body>
+    <div class="form-container">
+        <!-- <form class="form" method="POST" action="{{ url_for('dashboard') }}"> -->
+        <form class="form" method="POST" action="">
+          <div class="form-group">
+            <label for="id">Employee ID</label>
+            <input type="text" name="id" class="id" id="id" pattern="\d+" placeholder="Enter valid Employee ID">
+          </div>
+          <div class="form-group">
+            <label for="access_key">Access Key</label>
+            <input required="" class="access_key" name="access_key" id="access_key" type="password" placeholder="Enter valid Pass Key">
+          </div>
+          <input type="submit" id="submitBtn" class="form-submit-btn" value="Submit"></input>
+          <div class="form-group">
+            <label>{{ msg }}</label>
+          </div>
+        </form>
+      </div>
+</body>
+</html>
