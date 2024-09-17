@@ -39,14 +39,14 @@ The Fleet Manager application is designed to manage a fleet of robots for agricu
 ### Sidebar
 ![Sidebar](https://github.com/NakulSK221B/Fleet-Manager/assets/95758559/5811bba7-df48-4297-be8a-96ef23ba2418)
 
+## Development
+- **V1.0**: Completed.
+- **V2.0**: Under Development
 
-## Installation
+## Contributors
+- [Nakul S](https://github.com/NakulSK221B) (Owner)
 
-### To be updated...
-
-## Usage
-
-### To be updated...
+**Feel free to contact me if you're interested to contribute!!!**
 
 ## Acknowledgements
 - Center for Automated Systems Engineering, KLE Technological University for the internship opportunity.
