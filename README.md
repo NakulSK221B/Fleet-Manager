@@ -41,7 +41,7 @@ The Fleet Manager application is designed to manage a fleet of robots for agricu
 
 ## Development
 - **V1.0**: Completed.
-- **V2.0**: Under Development
+- **V2.0**: In Progress (Development is yet to begin...)
 
 ## Contributors
 - [Nakul S](https://github.com/NakulSK221B) (Owner)
